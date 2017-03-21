@@ -1,8 +1,8 @@
 # Proof-Theory-Notes-zh_CN
 ---
-这是我上[清华大学俞珺华老师](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html)讲授的证明论课程（2017年春季）时整理的笔记，主要以中文（作为元语言，哈哈）书写。
+这是我上[清华大学俞珺华老师](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html)讲授的证明论课程（2017年春季）时整理的笔记，主要以中文（作为元语言，哈哈哈）书写。
 
- -
+ \-
 
 These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Junhua Yu, THU](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html), mainly written in Chinese (as metalanguage lol). 
 
