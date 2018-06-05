@@ -172,7 +172,7 @@
 未封闭的证明枝 (1) 有两种可行选择: 使用规则 \RI 或 \LI. 先尝试 \RI:\\%(为减少分叉, 不妨总是先尝试 \RI)
 
 \begin{prooftree}[proof style=downwards]
-	\Hypo{(\a\to\b)\to\a, \a\to\b, \aa &\To \b}
+	\Hypo{(\a\to\b)\to\a, \a &\To \a\to\b}
 	\Hypo{}
 	\Infer1[(2)]{\a,\a &\To \b}
 	\Infer2[\LI]{\a, (\a\to\b)\to\a &\To \b}
@@ -182,7 +182,7 @@
 每一步的规则选择都是唯一的, 由此必然产生的未封闭的证明枝 (2), 而 (2) 处已经无规则可用, 因此这个推导路线不可行. 回溯到 (1), 既然此处使用 \RI 不可行, 那么只能选择 \LI:\\
 
 \begin{prooftree}[proof style=downwards]
-	\Hypo{\b \To \a\to\b}
+	\Hypo{\a \To \a\to\b}
 	\Hypo{}
 	\Infer1[(3)]{(\a\to\b)\to\a &\To \a\to\b}
 	\Infer2[\LI]{(\a\to\b)\to\a &\To \a\to\b}
