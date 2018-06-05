@@ -1,12 +1,22 @@
 # Proof-Theory-Notes-zh_CN
 ---
-这是我上[清华大学俞珺华老师](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html)讲授的证明论课程（2017年春季）时整理的笔记，主要以中文（作为元语言，哈哈哈）书写。
+这是我上[清华大学俞珺华老师](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html)讲授的证明论课程（2017年春季）时整理的笔记，主要以中文书写。以中文作为元语言（认真脸）。
 
  \-
 
 These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Junhua Yu, THU](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html), mainly written in Chinese (as metalanguage lol). 
 
  =
+
+# Contents
+
+## 进行中
+
+证明直觉主义命题逻辑不能导出Peirce律和排中律-精简版 [src](IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.tex) [pdf](https://github.com/SnowOnion/Proof-Theory-Notes-zh_CN/releases/download/IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition/IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.pdf)
+
+## 已完成
+
+None
 
 
 # 笔记的组织
@@ -19,7 +29,13 @@ These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Jun
 
 + “只为了给自己看懂的版本”
 + “尝试分享给逻辑学爱好者、计算机工作者的，自包含的版本”
-+ “向大佬提问时呈上的梗概版本”
++ “向大佬提问时呈上的精简版本”
 
 等。
+
+
+
+#
+
+时隔一年，已经不容易忠实记录“每一块儿内容是哪一节课讲的”的信息——可能也不太必要？
 

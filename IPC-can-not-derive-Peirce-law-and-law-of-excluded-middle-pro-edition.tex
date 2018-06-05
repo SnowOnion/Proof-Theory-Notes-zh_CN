@@ -1,0 +1,243 @@
+%!TEX program = xelatex
+\documentclass{article}
+\usepackage[top=0.5in, bottom=1in, left=0.75in, right=0.75in]{geometry} % 页边距
+\usepackage{xeCJK} % xeCJK 中文最小模板 via http://seisman.info/mini-template-for-xeCJK.html
+\usepackage{amsfonts} % \mathbb
+\usepackage{amsmath} % \DeclareMathOperator
+\usepackage{ebproof}   % Sequent calculi, easier % Thank you, Yinqiu Zhu!
+\usepackage{tabularx} % 临时分栏 http://bbs.ctex.org/forum.php?mod=viewthread&tid=78284
+\usepackage{array} % 表格 https://zhuanlan.zhihu.com/p/19749566
+
+
+% 从 hw5 copy
+\def\To{\Rightarrow}
+
+\def\a{\alpha}
+\def\b{\beta}
+\def\c{\gamma}
+\def\d{\delta}
+\def\C{\Gamma}
+\def\D{\Delta}
+
+
+\def\S{\Sigma}
+\def\P{\Pi}
+
+\def\e{\eta}
+\def\t{\theta}
+\def\T{\Theta}
+
+\def\AX{(AX)}
+\def\LB{(L$\bot$)}
+\def\LA{(L$\land$)}
+\def\LAL{(L$\land_L$)}
+\def\LAR{(L$\land_R$)}
+\def\RA{(R$\land$)}
+\def\LV{(L$\lor$)}
+\def\RV{(R$\lor$)}
+\def\RVL{(R$\lor_L$)}
+\def\RVR{(R$\lor_R$)}
+
+\def\RI{(R$\to$)}
+\def\LI{(L$\to$)}
+
+\def\LW{(LW)}
+\def\RW{(RW)}
+\def\LC{(LC)}
+\def\RC{(RC)}
+
+% RC = R Conjunction = R Contraction hmmmmm
+% So, RA, RV 2333333
+% 重定义宏，没有error没有warning…… 后一个默默覆盖。
+
+% 蛤！TeXstudio 的编辑器 也 可以定义宏…… shift+F1出个证明环境233
+
+\def\EQ{($\equiv$)}
+
+\def\Gonecp{$ \mathsf{G1cp} $ }
+\def\Gthreecp{$ \mathsf{G3cp}$ }
+\def\Gthreeip{$ \mathsf{G3ip}$ }
+\def\Gthreei{$ \mathsf{G3i}$ }
+\def\Gonec{$ \mathsf{G1c} $ }
+\def\Gonesfour{$ \mathsf{G1S4} $ } % TODO 为啥最后得加空格？
+
+\def\Goneip{$ \mathsf{G1ip} $ }
+\def\Gonei{$ \mathsf{G1i} $ }
+
+\def\Gtwocps{$ \mathsf{G2cp^*} $  }
+\def\Gtwomips{$ \mathsf{G2[mi]p^*} $  }
+\def\Gtwoips{$ \mathsf{G2ip^*} $  }
+
+
+
+\def\LVM{(L$\lor^\otimes$)}
+
+\usepackage{amssymb}
+
+\def\Dia{\Diamond} % diamond is small, Diamond is thin
+
+\def\KBox{(K$\Box$)}
+\def\RBox{(R$\Box$)}
+\def\FBox{(4$\Box$)}
+\def\LBox{(L$\Box$)} % LB = L Bottom... 
+
+\def\LDia{(L$\Dia$)}
+
+\def\LN{(L$\neg$)}
+\def\RN{(R$\neg$)}
+\def\LNN{(L$\neg\neg$)}
+\def\RNN{(R$\neg\neg$)}
+
+\def\LAll{(L$ \forall $)}
+\def\LExi{(L$ \exists $)}
+\def\RAll{(R$ \forall $)}
+\def\RExi{(R$ \exists $)}
+
+%\Gonecp
+%
+%\AX \LB \LAL \LAR \RA \LV \RVL \RVR \RI \LI
+%
+%\LW \RW \LC \RC
+%
+%\EQ
+
+\title{证明直觉主义命题逻辑不能导出 Peirce 律和排中律 (精简版)\\(Work in Progress)}
+\author{SOnion}
+
+\begin{document}
+
+\maketitle
+
+
+%This text proves that \Gthreeip, a sequent calculus system for intuitionistic propositional logic, can not derive sequents $~\To((\a\to\b)\to\a)\to\a$ and $~\To \a\lor\neg\a$, thus proving $((\a\to\b)\to\a)\to\a$ (Peirce's law) and $\a\lor\neg\a$ (law of excluded middle) are not valid formulas in intuitionistic propositional logic.
+
+%Peirce 律和排中律是两个重要的命题逻辑公式. Peirce 律是 $((\a\to\b)\to\a)\to\a$, 排中律是 $\a\lor\neg\a$, 其中 $\a,\b$ 是\underline{命题逻辑公式} (下文简称``公式'', 因为本文只在命题逻辑范围内讨论). 
+
+(标题中 ``精简版'' 的意思是, 假设读者对矢列演算 (sequent calculus, 又译\underline{相继式演算}等) 有一定了解, 进而文中不做过多解释; 可能会写一个扩展版, 以此为切入点来介绍矢列演算……)\\
+
+本文通过在直觉主义命题逻辑的一个矢列演算系统 \Gthreeip 中进行反向证明搜索, 证明了矢列 $~\To((\a\to\b)\to\a)\to\a$ 和 $~\To \a\lor\neg\a$ 不可在 \Gthreeip 被导出, 即证明了 $((\a\to\b)\to\a)\to\a$ (Peirce 律) 和 $\a\lor\neg\a$ (排中律) 不是直觉主义命题逻辑的有效式. 
+
+\Gthreeip 是一个\underline{表达}(? ``形式化了''?用啥词好呢)了直觉主义命题逻辑的矢列演算系统, 它由直觉主义一阶逻辑的一个矢列演算系统 \Gthreei 删去四个关于量词的规则而得到(\Gthreei 于 1996 年由 Troelstra 和 Schwichtenberg 在《Basic Proof Theory》中引入). \Gthreeip 的规则如下:
+
+
+% 临时分栏 http://bbs.ctex.org/forum.php?mod=viewthread&tid=78284
+\begin{trivlist}
+	\item
+	\abovedisplayskip=-\baselineskip
+	\belowdisplayskip=-\baselineskip
+	\begin{tabularx}{\textwidth}{X|X}
+		$$
+		\begin{array}{cl}
+		
+		\displaystyle{\frac{} {p,\C \To p}} & \textmd{\AX} \\ \\
+		\displaystyle{\frac{\a,\b,\C \To \d} {\a\land\b,\C \To \d}} & \textmd{\LA} \\ \\
+		\displaystyle{\frac{\a,\C \To \d \quad\quad \b,\C \To \d} {\a\lor\b,\C \To \d}} & \textmd{\LV} \\ \\
+		\displaystyle{\frac{\a\to\b,\C \To \a \quad\quad \b,\C \To \d} {\a\to\b,\C \To \d}} & \textmd{\LI} \\ \\
+	
+		\end{array}
+		$$
+		&
+		$$
+		\begin{array}{cl}
+		
+		\displaystyle{\frac{} {\bot,\C \To \a}} & \textmd{\LB} \\ \\
+		\displaystyle{\frac{\C \To \a \quad\quad \C \To \b} {\C \To \a\land\b}} & \textmd{\RA} \\ \\
+		\displaystyle{\frac{\C \To \a} {\C \To \a\lor\b}} \textmd{\RVL} & \displaystyle{\frac{\C \To \b} {\C \To \a\lor\b}} \textmd{\RVR} \\ \\
+		\displaystyle{\frac{\a,\C \To \b} {\C \To \a\to\b}} & \textmd{\RI} \\ \\
+		
+		\end{array}
+		$$
+		
+	\end{tabularx}
+\end{trivlist}
+
+其中 $\a,\b,\d$ 是公式, $p$ 是原子命题, $\C$ 是公式的多重集; $\bot$ 定义成一个零元联结词, 对任意公式 $\a$ 将 $\neg\a$ 定义为 $\a\to\bot$. 值得注意的是, \Gthreeip 中矢列的前件和后件, 都是公式的多重集, 而不是序列或集合 (作为对比, Gentzen 最初提出的矢列演算系统 LK 和 LJ 里面的矢列的前件和后件都是序列, 因此需要 permutation 规则来调整公式的顺序).  
+
+由于反向证明搜索从结论出发, 为了方便表述搜索过程, 本文倒着写证明树, 即: 树根 (待证矢列) 写在最上方; 规则的应用中, 结论写在上方, 前提写在下方.
+
+\section*{Peirce 律不可导出}
+从待证矢列 $~ \To ((\a\to\b)\to\a)\to\a$ 出发开始搜索. 在搜索的前几步, 可使用的规则是唯一的, 直到遇到证明枝 (1):\\
+
+% 似乎 & 可以对齐耶
+\begin{prooftree}[proof style=downwards]
+	\Hypo{}
+	\Infer1[\AX]{\a \To \a}
+	\Hypo{}
+%	\Infer1[\RI~or \LI]{(\a\to\b)\to\a &\To \a\to\b}
+	\Infer1[(1)]{(\a\to\b)\to\a &\To \a\to\b}
+	\Infer2[\LI]{(\a\to\b)\to\a &\To \a}
+	\Infer1[\RI]{~ &\To ((\a\to\b)\to\a)\to\a}
+\end{prooftree}\\
+
+未封闭的证明枝 (1) 有两种可行选择: 使用规则 \RI 或 \LI. 先尝试 \RI:\\%(为减少分叉, 不妨总是先尝试 \RI)
+
+\begin{prooftree}[proof style=downwards]
+	\Hypo{(\a\to\b)\to\a, \a\to\b, \aa &\To \b}
+	\Hypo{}
+	\Infer1[(2)]{\a,\a &\To \b}
+	\Infer2[\LI]{\a, (\a\to\b)\to\a &\To \b}
+	\Infer1[\RI]{(\a\to\b)\to\a &\To \a\to\b}
+\end{prooftree}\\
+
+每一步的规则选择都是唯一的, 由此必然产生的未封闭的证明枝 (2), 而 (2) 处已经无规则可用, 因此这个推导路线不可行. 回溯到 (1), 既然此处使用 \RI 不可行, 那么只能选择 \LI:\\
+
+\begin{prooftree}[proof style=downwards]
+	\Hypo{\b \To \a\to\b}
+	\Hypo{}
+	\Infer1[(3)]{(\a\to\b)\to\a &\To \a\to\b}
+	\Infer2[\LI]{(\a\to\b)\to\a &\To \a\to\b}
+\end{prooftree}\\
+
+使用 \LI 立即产生了证明枝 (3), 而 (3) 的矢列与 (1) 的一样, 产生循环, 因此这个推导路线也不可行. 事实上 \LI 规则中一旦 $\a=\d$, 就会产生循环. 
+
+所以任何一个推导路线都不可行, 即 \Gthreeip $\not\vdash~ \To ((\a\to\b)\to\a)\to\a$, 所以 Peirce 律 $((\a\to\b)\to\a)\to\a$ 在直觉主义命题逻辑中不是有效式.
+
+\section*{排中律不可导出}
+$\a\lor\neg\a$ 是 $\a\lor(\a\to\bot)$ 的缩写, 由此开始反向证明搜索. 主联结词是 $\lor$, 因此可以使用 \RVL 或 \RVR. 先尝试 \RVL:\\
+
+\begin{prooftree}[proof style=downwards]
+	\Hypo{}
+	\Infer1[(1)]{\To \a}
+	\Infer1[\RVL]{\To \a\lor(\a\to\bot)}
+\end{prooftree}\\
+
+在证明枝 (1) 处无规则可用, 回溯到开头尝试 \RVR:\\
+
+\begin{prooftree}[proof style=downwards]
+	\Hypo{}
+	\Infer1[(2)]{\a \To \bot}
+	\Infer1[\RI]{\To \a\to\bot}
+	\Infer1[\RVR]{\To \a\lor(\a\to\bot)}
+\end{prooftree}\\
+
+在证明枝 (2) 处无规则可用. 所有推导路线都不可行, 故排中律 $\a\lor\neg\a$ 在直觉主义命题逻辑中不是有效式.
+
+\section*{附: 本文使用的术语}
+
+我尽量用见过的翻译; 有些词我不确定中文里叫啥, 有些我不确定英文里叫啥; 有的词我不知道是否被广泛地(按照我理解的含义)被使用——主要是从老师那里听到的词.
+
+\begin{enumerate}
+	\item sequent calculus - 矢列演算 (又译相继式演算等)
+	\item antecedent / succedent - 前件 / 后件 (矢列的分隔符(有用$\To$的, 有用$\vdash$的)的左边和右边)
+	\item premise / conclusion -  前提 / 结论 (规则的大横线的上边和下边)
+	\item proof system, proof calculus - 证明系统 (如公理系统, 各种矢列演算, 各种自然演绎)
+	\item derive, deduce - 导出, 推导 (使用证明系统的规则来推导内定理, 如在 \Gthreei 中推导 $\a\To\a$)
+	\item (backward) proof search - (反向) 证明搜索 
+	\item sequence / multiset / set - 序列 / 多重集 / 集合
+	\item ? - 内定理
+	\item ? - 证明枝
+\end{enumerate}
+
+
+\section*{参考}
+
+
+\begin{enumerate}
+	\item 俞珺(⿰王君)华老师的证明论课程
+	\item Basic Proof Theory 2nd Edition
+	\item A terminating evaluation-driven variant of \Gthreei  https://homes.di.unimi.it/fiorentini/download/slidesTableaux2013.pdf
+\end{enumerate}
+
+
+
+\end{document}
