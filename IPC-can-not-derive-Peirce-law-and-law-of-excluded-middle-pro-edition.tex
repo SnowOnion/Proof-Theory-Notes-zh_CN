@@ -116,7 +116,7 @@
 
 (标题中 ``精简版'' 的意思是, 假设读者对矢列演算 (sequent calculus, 又译\underline{相继式演算}等) 有一定了解, 进而文中不做过多解释; 可能会写一个扩展版, 以此为切入点来介绍矢列演算……)\\
 
-本文通过在直觉主义命题逻辑的一个矢列演算系统 \Gthreeip 中进行反向证明搜索, 证明了矢列 $~\To((\a\to\b)\to\a)\to\a$ 和 $~\To \a\lor\neg\a$ 不可在 \Gthreeip 被导出, 即证明了 $((\a\to\b)\to\a)\to\a$ (Peirce 律) 和 $\a\lor\neg\a$ (排中律) 不是直觉主义命题逻辑的有效式. 
+本文通过在直觉主义命题逻辑的一个矢列演算系统 \Gthreeip 中进行反向证明搜索, 证明了矢列 $~\To((\a\to\b)\to\a)\to\a$ 和 $~\To \a\lor\neg\a$ 不可在 \Gthreeip 被导出, 即证明了 $((\a\to\b)\to\a)\to\a$ (Peirce 律) 和 $\a\lor\neg\a$ (排中律) 不是直觉主义命题逻辑的定理. 
 
 \Gthreeip 是一个\underline{表达}(? ``形式化了''?用啥词好呢)了直觉主义命题逻辑的矢列演算系统, 它由直觉主义一阶逻辑的一个矢列演算系统 \Gthreei 删去四个关于量词的规则而得到(\Gthreei 于 1996 年由 Troelstra 和 Schwichtenberg 在《Basic Proof Theory》中引入). \Gthreeip 的规则如下:
 
@@ -191,7 +191,7 @@
 
 使用 \LI 立即产生了证明枝 (3), 而 (3) 的矢列与 (1) 的一样, 产生循环, 因此这个推导路线也不可行. 事实上 \LI 规则中一旦 $\a=\d$, 就会产生循环. 
 
-所以任何一个推导路线都不可行, 即 \Gthreeip $\not\vdash~ \To ((\a\to\b)\to\a)\to\a$, 所以 Peirce 律 $((\a\to\b)\to\a)\to\a$ 在直觉主义命题逻辑中不是有效式.
+所以任何一个推导路线都不可行, 即 \Gthreeip $\not\vdash~ \To ((\a\to\b)\to\a)\to\a$, 所以 Peirce 律 $((\a\to\b)\to\a)\to\a$ 在直觉主义命题逻辑中不是定理.
 
 \section*{排中律不可导出}
 $\a\lor\neg\a$ 是 $\a\lor(\a\to\bot)$ 的缩写, 由此开始反向证明搜索. 主联结词是 $\lor$, 因此可以使用 \RVL 或 \RVR. 先尝试 \RVL:\\
@@ -211,7 +211,7 @@ $\a\lor\neg\a$ 是 $\a\lor(\a\to\bot)$ 的缩写, 由此开始反向证明搜索
 	\Infer1[\RVR]{\To \a\lor(\a\to\bot)}
 \end{prooftree}\\
 
-在证明枝 (2) 处无规则可用. 所有推导路线都不可行, 故排中律 $\a\lor\neg\a$ 在直觉主义命题逻辑中不是有效式.
+在证明枝 (2) 处无规则可用. 所有推导路线都不可行, 故排中律 $\a\lor\neg\a$ 在直觉主义命题逻辑中不是定理式.
 
 \section*{附: 本文使用的术语}
 
@@ -234,7 +234,7 @@ $\a\lor\neg\a$ 是 $\a\lor(\a\to\bot)$ 的缩写, 由此开始反向证明搜索
 
 
 \begin{enumerate}
-	\item 俞珺(⿰王君)华老师的证明论课程
+	\item 俞珺(⿰王君)华老师的证明论课程，2017 春
 	\item Basic Proof Theory 2nd Edition
 	\item A terminating evaluation-driven variant of \Gthreei  https://homes.di.unimi.it/fiorentini/download/slidesTableaux2013.pdf
 \end{enumerate}
