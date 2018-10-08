@@ -1,0 +1,333 @@
+%!TEX program = xelatex
+\documentclass{article}
+\usepackage[top=0.5in, bottom=1in, left=1.25in, right=1.25in]{geometry} % 页边距
+\usepackage{xeCJK} % xeCJK 中文最小模板 via http://seisman.info/mini-template-for-xeCJK.html
+\usepackage{amsfonts} % \mathbb
+\usepackage{amsmath} % \DeclareMathOperator
+\usepackage{ebproof}   % Sequent calculi, easier % Thank you, Yinqiu Zhu!
+\usepackage{tabularx} % 临时分栏 http://bbs.ctex.org/forum.php?mod=viewthread&tid=78284
+\usepackage{array} % 表格 https://zhuanlan.zhihu.com/p/19749566
+\usepackage{datetime2} % 不仅要日期还要时间
+\usepackage{enumitem} % 定制列表 https://www.latex-tutorial.com/tutorials/lists/
+
+% 2018-09-23 LGC
+%\usepackage{mathabx} % \Dashv not beautiful! No double direction!
+\usepackage{turnstile} % well… 支持\not（？）, 不错啊
+% http://mirrors.huaweicloud.com/repository/toolkit/CTAN/macros/latex/contrib/turnstile/turnstile-en/turnstile_article.pdf
+% https://ctan.org/pkg/turnstile
+\def\seq{\sdststile{}{}} % “semantically equivalent”
+\def\nseq{\not\sdststile{}{}}
+
+\usepackage{amsthm} % \begin{proof} 证明过程 \end{proof}
+\usepackage{mathrsfs}% \mathscr
+\usepackage{graphicx} 
+%\includegraphics[scale=0.6]{fullscreen.png}
+% eg: width=3cm[缩放因子], height=8 cm[缩放因子] scale=0.4[缩放因子]
+% 浮动体
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[width=13.5cm]{2(b).JPG}
+%	\caption{Expected Truth Tables of $I_0,\cdots,I_4$ }
+%	\label{fig:proving-imply-cannot-derive-and}
+%\end{figure}
+
+
+% 从 PT 2017 hw5 copy 改造（该模块化了！）
+
+\def\To{\Rightarrow}
+
+\def\a{\alpha}
+\def\b{\beta}
+\def\c{\gamma}
+\def\d{\delta}
+\def\C{\Gamma}
+\def\D{\Delta}
+
+
+\def\S{\Sigma}
+\def\P{\Pi}
+
+\def\e{\eta}
+\def\t{\theta}
+\def\T{\Theta}
+
+\def\AX{(AX)}
+\def\LB{(L$\bot$)}
+\def\LA{(L$\land$)}
+\def\LAL{(L$\land_L$)}
+\def\LAR{(L$\land_R$)}
+\def\RA{(R$\land$)}
+\def\LV{(L$\lor$)}
+\def\RV{(R$\lor$)}
+\def\RVL{(R$\lor_L$)}
+\def\RVR{(R$\lor_R$)}
+
+\def\RI{(R$\to$)}
+\def\LI{(L$\to$)}
+
+\def\LW{(LW)}
+\def\RW{(RW)}
+\def\LC{(LC)}
+\def\RC{(RC)}
+
+% RC = R Conjunction = R Contraction hmmmmm
+% So, RA, RV 2333333
+% \def 重定义宏, 没有error没有warning…… 后一个默默覆盖。\newcommand 则会检查, 不能覆盖已有的命令。\renewcommand 则又能覆盖……
+% 怎么快速找到哪个命令在哪个宏包被定义的呢？
+
+% 蛤！TeXstudio 的编辑器 也 可以定义宏（快捷键层面）…… shift+F1出个证明环境233
+
+\def\EQ{($\equiv$)}
+
+\def\Gonecp{$ \mathsf{G1cp} $ }
+\def\Gthreecp{$ \mathsf{G3cp}$ }
+\def\Gthreeip{$ \mathsf{G3ip}$ }
+\def\Gthreei{$ \mathsf{G3i}$ }
+\def\Gonec{$ \mathsf{G1c} $ }
+\def\Gonesfour{$ \mathsf{G1S4} $ } % TODO 为啥最后得加空格？
+
+\def\Goneip{$ \mathsf{G1ip} $ }
+\def\Gonei{$ \mathsf{G1i} $ }
+
+\def\Gtwocps{$ \mathsf{G2cp^*} $  }
+\def\Gtwomips{$ \mathsf{G2[mi]p^*} $  }
+\def\Gtwoips{$ \mathsf{G2ip^*} $  }
+
+
+
+\def\LVM{(L$\lor^\otimes$)}
+
+\usepackage{amssymb}
+
+\def\Dia{\Diamond} % diamond is small, Diamond is thin
+
+\def\KBox{(K$\Box$)}
+\def\RBox{(R$\Box$)}
+\def\FBox{(4$\Box$)}
+\def\LBox{(L$\Box$)} % LB = L Bottom... 
+
+\def\LDia{(L$\Dia$)}
+
+\def\LN{(L$\neg$)}
+\def\RN{(R$\neg$)}
+\def\LNN{(L$\neg\neg$)}
+\def\RNN{(R$\neg\neg$)}
+
+\def\LAll{(L$ \forall $)}
+\def\LExi{(L$ \exists $)}
+\def\RAll{(R$ \forall $)}
+\def\RExi{(R$ \exists $)}
+
+%\Gonecp
+%
+%\AX \LB \LAL \LAR \RA \LV \RVL \RVR \RI \LI
+%
+%\LW \RW \LC \RC
+%
+%\EQ
+
+\title{Junhua Yu 证明论 2017 - SOnion 笔记 (草稿)}
+\author{snowonionlee@gmail.com}
+\date{\DTMnow}
+
+\begin{document}
+
+\maketitle
+
+本文期待的读者是啥样的人呢? 如果您完全不懂符号逻辑或者叫数理逻辑或简称逻辑, 肯定没法以本文来入门; 如果您学过一些逻辑, 可能能从本文得到各个逻辑的关系的梳理---也很可能从本文找出大大小小错误来, 不过我保证公开发布 (QQ 和微信群 = 不太公开, GitHub = 公开) 前我至少会自己再三审读.
+
+形式语言很重要, 解读它们的自然语言也很重要.
+
+时间所限, 先只写核心的东西, 所以基本上写的都是形式语言, 起承转合的自然语言很少.
+
+我 \LaTeX 不熟, 排版中文更不熟, 所以就先看个影儿吧.
+
+\section{当我们谈论``一个逻辑''、``一个证明系统''的时候在谈论什么}
+
+\subsection{逻辑}
+
+我们在此约定: 本笔记系列谈论``一个逻辑''的时候, 说的是这个集合的一个元素:
+%$$
+%\{\text{极小逻辑, 直觉主义逻辑, 古典逻辑,} \cdots\} \times \{命题逻辑, 一阶逻辑, 模态逻辑, \cdots\}
+%$$
+$$
+\{\text{极小逻辑}, \text{直觉主义逻辑}, \text{古典逻辑}, \cdots\} \times \{\text{命题逻辑}, \text{一阶逻辑}, \text{模态逻辑}, \cdots\}
+$$
+
+譬如``古典命题逻辑''是一个逻辑、``直觉主义模态逻辑''是另一个逻辑. 
+% 选择一组逻辑联结词, 选定一种具体的形式文法, 
+
+同一个逻辑不一定总是``长得一样''. 有两个层次能让同一个逻辑的``外貌''发生变化. 以古典命题逻辑为例:
+
+第一个层次, 选择不同的逻辑联结词集合, 该逻辑的公式的 (作为树的) 形态会不一样. 本笔记系列选取的联结词有 $\to,\land,\lor,\bot$. 其中, 蕴含、合取、析取是二元的, bottom 是零元的.
+
+第二个层次, 对给定的逻辑联结词集合, 选择不同的具体语法, 该逻辑的公式的 (作为字符串的) 形态会不一样. 我们选取这个具体语法:
+
+$$
+\phi ::= A \mid \bot \mid (\phi \to \phi) \mid (\phi \land \phi) \mid (\phi \lor \phi)
+$$ 
+
+其中 $A$ 代表原子命题. 我们常使用小写拉丁字母表示原子命题, 使用小写希腊字母表示公式.
+
+并作以下约定: 
+\begin{enumerate}
+\item 公式最外层的括号可以省略;
+\item 优先级方面, 合取 > 析取 > 蕴含, 在此基础上若不引起歧义可以省略括号;
+\item 结合性, 合取、析取、蕴含规定为右结合, 在此基础上若不引起歧义可以省略括号.
+\end{enumerate}
+如: 把 $a \to b \to a$ 补全括号后是 $(a \to (b \to a))$, 把 
+$p \land q \land r \lor u \lor v \to w$ 补全括号之后是 
+$(((p \land (q \land r)) \lor (u \lor v)) \to w)$.
+
+这样一来, 原子命题 $p$ 是公式, $p \to \bot$ 是公式, $p \to$ 不是公式 (不符合具体语法), $\neg p$ 不是公式 (我们没有选取 $\neg$ 作为逻辑联结词!).
+
+当我们需要引入``否定''的时候, 会把 $\neg \a$ 仅仅当成一个语法上的缩写, 将 $\neg \a$ 定义为 $\a \to \bot$. 也就是说, 写下 $\neg \a$ 的效果等同于写下 $\a \to \bot$ (并补充必要的括号). 值得指出, 在此种定义之下, $\neg$ 是元语言的符号, 而不是我们讨论的对象语言---命题逻辑的语言---的符号. 我们将会说 $\neg p$ 是公式---这其实是在说 $p \to \bot$ 是公式.\\
+
+注: 
+\begin{itemize}
+	\item 事实上, 这个语法不仅适用于古典命题逻辑, 还适用于极小命题逻辑和直觉主义命题逻辑.
+	\item 如果您有一些计算机科学, 特别是程序语言的知识, 可以看出: 第一个层次是抽象语法, 第二个层次是具体语法.
+\end{itemize}
+
+
+\subsection{证明系统}
+
+读者大概已经知道, 讨论一个逻辑, 有两个截然不同的方面: 语义的和语形的. ``真、假、赋值、解释、模型、永真式 (有效式)、可满足、不可满足、$\models$、$\Vdash$'' 这些词汇和符号归属语义那边，``推导、公理、推理规则、定理 (内定理)、可证明、不可证明、$\vdash$'' 则归属语形这边. 这是结构证明论的笔记, 因此讨论的几乎全都是语形的方面.
+
+``一个证明系统''关心一个逻辑的语形推导. 一个证明系统的``类型''**是这个集合的一个元素:
+$$
+\{\text{极小逻辑}, \text{直觉主义逻辑}, \text{古典逻辑*}, \cdots\} \times \{\text{命题逻辑}, \text{一阶逻辑}, \text{模态逻辑}, \cdots\} \times \{\text{公理系统}, \text{矢列演算}, \text{自然演绎}, \cdots\}
+$$
+
+极小、直觉主义、古典是逻辑的最常见的三种基底; 公理系统、矢列演算和自然演绎则是最常见的三类证明系统框架, 《Basic Proof Theory 第二版》称之为``three types of formalism''.
+
+譬如我们在矢列演算的章节要详细谈的 \Gonecp, 就是古典命题逻辑的矢列演算系统的一种. c for classical (古典), p for propositional (命题), G for Gentzen (根岑, 矢列演算的发明人), 1 是个``编号''---古典命题逻辑的矢列演算系统不止一种.\\
+
+注:
+\begin{itemize}
+	\item * 在本笔记系列中, ``古典逻辑''和``经典逻辑''是同义词, ``一阶逻辑''和``一阶谓词逻辑''是同义词.
+	\item ** 此处``类型''不是严格的术语!
+\end{itemize}
+
+我们紧接着要详细谈的是命题逻辑的公理系统.
+
+
+\section{希尔伯特风格的公理系统}
+
+在本笔记系列中, ``公理系统''、``希尔伯特风格的公理系统''、``希尔伯特风格系统''是同义词.
+
+公理系统这种证明系统的特点是, 公理多, 规则少 (只有 MP 规则). 相比之下, 矢列演算的特点是公理少 (0 个), 规则多.
+
+须知, 选取不同的公理集合, 也可能证明出同样的定理集合---也就是说形式化了同一个逻辑. 下文我们选取的是其中一种.
+
+极小命题逻辑、直觉主义命题逻辑、古典命题逻辑中都只有 MP 规则, 而公理依次增多. 直觉主义是极小加上``bottom 蕴含一切'', 古典是直觉主义加上双否消去或者加上排中律. 我们统一叙述 MP 规则, 然后依次叙述它们的公理.
+
+MP 规则为:
+
+\begin{prooftree} 
+	\Hypo{\C \vdash \a}
+	\Hypo{\D \vdash \a \to \b}
+	\Infer2[(MP)]{\C \cup \D \vdash \b} 
+\end{prooftree}	\\
+
+其中 $\a, \b$ 为公式, $\C, \D$ 为公式的集合, $\cup$ 是集合的并运算. MP 规则的含义为: 如果以 $\C$ 为前提能推导出 $\a$, 以 $\D$ 为前提能推导出 $\a \to \b$, 那么从公共的前提 $\C \cup \D$ 就能推导出 $\b$.
+
+是不是比 
+\begin{prooftree} 
+	\Hypo{\a}
+	\Hypo{\a \to \b}
+	\Infer2[]{\b} 
+\end{prooftree}	
+要酷炫一些? :) 
+
+因为通用所以酷炫.
+
+\subsection{极小命题逻辑}
+
+采用 1.1 中定义的命题逻辑语言. 
+
+公理模式有 8 条:
+
+\begin{enumerate}
+\item $\vdash \a \to (\b \to \a)$
+\item $\vdash (\a \to (\b \to \a)) \to ((\a \to \b) \to (\a \to \c))$
+\item $\vdash \a \to \a \lor \b$
+\item $\vdash \b \to \a \lor \b$
+\item $\vdash (\a \to \c) \to ((\b \to \c) \to ((\a \lor \b) \to \c))$
+\item $\vdash \a \land \b \to \a$
+\item $\vdash \a \land \b \to \b$
+\item $\vdash \a \to (\b \to (\a \land \b))$
+\end{enumerate}
+
+现在可以说一些注意事项了:
+
+\begin{enumerate}
+\item 注意到公理模式里没有 $\bot$ (因此也没有 $\neg$). 这导致, 极小命题逻辑里 $\bot$ 没有任何特殊性, 就是一个普通原子命题.
+\item 什么是``公理模式 (axoim schema)''? 因为其中的 $\a, \b, \c$ 都是元语言符号 (更具体地, ``元语言变元''), 将公理模式里的它们替换成任意公式, 都能得到一个具体的公理. 这样子, 8 条公理模式对应着可数无穷条公理. 类似地, 我们也说 ``定理模式''.
+\item 为什么一直说``推导''而避免说``证明''呢? 我用``推导''表示: 从公理和一些公式前提出发, 应用推理规则, 得到一个公式作为结论. Reserve ``prove'' in meta level, 即``证明''我一般指元定理 (譬如演绎定理、可靠性、完全性) 的证明.
+\item 公理 3 和 4 是否重复? 不. 我们讨论语形推导, 不涉及语义, 所以 $\a \lor \b$ 和 $\b \lor \a$ 没什么关系.
+\end{enumerate}
+
+我们来在极小命题逻辑里推导\emph{同一律} $\vdash \a \to \a$, 顺便展示公理系统的内定理的证明的树形的写法 (而非常见的序列形的写法).
+\begin{proof}.\\
+\begin{prooftree} 
+	\Hypo{}
+	\Infer1[(公理1)]{\vdash \a \to ((\a \to \a) \to \a)}
+	\Hypo{}
+	\Infer1[(公理2)]{\vdash (\a \to ((\a \to \a) \to \a)) \to ((\a \to (\a \to \a)) \to (\a \to \a))}
+	\Infer2[(MP)]{\vdash (\a \to (\a \to \a)) \to (\a \to \a)} 
+	\Hypo{}
+	\Infer1[(公理1)]{\vdash \a \to (\a \to \a)}
+	\Infer2[(MP)]{\vdash \a \to \a} 
+\end{prooftree}
+\end{proof}
+(喷了! 突破天际了. 这可咋整……)
+
+注意到我们叙述的同一律也是个定理模式, 而非一个具体的定理.~:D
+
+\subsection{直觉主义命题逻辑}
+
+在极小命题逻辑的基础上, 加一个公理模式, 即得到直觉主义命题逻辑:
+
+\begin{enumerate}[start=9]
+\item $\vdash \bot \to \a$
+\end{enumerate}
+
+随着公理的增多, 能推导的定理也会变多. 推导同一律只需要公理 1 和公理 2, 所以同一律是极小命题逻辑的内定理, 是直觉主义命题逻辑的内定理, 也是古典命题逻辑的内定理.
+
+如 1.1 所提到的, 对于公式 $\a$, 将 $\neg \a$ 定义为 $\a \to \bot$. 再次强调这是一个纯语法的替换; $\neg$ 是元语言的符号. 规定 $\neg$ 的优先级比 $\land$ 更高.
+
+在直觉主义命题逻辑里不能推导出这两个内定理: $\vdash \neg \neg \a \to \a$ 和 $\vdash \a \lor \neg \a$. ``$\vdash \phi$ 不是形式系统 $H$ 的内定理'', 或者说 ``$H$ 不能推导出公式 $\a$'', 这是关于 $H$ 的一个元定理, 或者说是 $H$ 的一个性质; 它可以记作 $H \not\vdash \a$ (这个符号可能让人不太舒服: 以前 $\vdash$ 左边都是公式集, 现在怎么是一个形式系统? 还好, 一般不会有歧义). ``不能推导出 (underivability)'' (或者为修辞而暂时不严格一下, ``不可证'') 是可以证明的! 虽然, 在公理系统里证明 underivability 比较难, 在矢列演算里则相对简单.
+
+\subsection{古典命题逻辑}
+
+在直觉主义命题逻辑的基础上, 加以下两个公理模式之一, 即得到古典命题逻辑:
+\begin{enumerate}[start=10]
+\item $\vdash \neg \neg \a \to \a$ (双否消去)
+\end{enumerate}
+\begin{enumerate}[start=10]
+\item $\vdash \a \lor \neg \a$ (排中律)
+\end{enumerate}
+
+读者练习 (一个证内定理, 一个证元定理): 
+
+\begin{enumerate}
+\item 在古典命题逻辑里推导定理模式 $\vdash (\neg \b \to \neg \a) \to (\a \to \b)$.
+\item 记公式模式 $\eta = (((\a \to \b) \to \a) \to \a)$. 请证明或证伪: 直觉主义命题逻辑加上 $\eta$ 作为公理, 能推导出所有古典命题逻辑的定理 (这可以记作 $I_{pc} \oplus \eta \supseteq C_{pc}$).
+\end{enumerate}
+
+
+\section{版权、免责和负责声明}
+\begin{itemize}
+\item 暂时, 作者 SOnion 保留一切权利. 也许以后 CC 吧.
+\item 本文在法律上不对正确性作保证, 引用本文所造成的损失恕不负责.
+\item 如果本文有错, 一般是我的理解、记录或打字错误, 而非 Junhua Yu 讲错~:D
+\end{itemize}
+
+
+
+
+
+
+\end{document}
