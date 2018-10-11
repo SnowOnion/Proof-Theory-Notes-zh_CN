@@ -12,10 +12,11 @@ These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Jun
 
 ## 进行中
 
-第一次课：预备知识，逻辑和证明系统，极小、直觉主义、古典的命题逻辑的公理系统 [src](week-01.tex) [pdf](https://github.com/SnowOnion/Proof-Theory-Notes-zh_CN/files/2457360/week-01-logic_and_proof_system-minimal_intuitionism_classical_propositional_logic_in_axiomatic_system.pdf)
+此处给出到 .tex 源文件或源文件目录的链接；pdf 见 [releases](releases).
 
-证明直觉主义命题逻辑不能导出Peirce律和排中律-精简版 [src](IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.tex) [pdf](https://github.com/SnowOnion/Proof-Theory-Notes-zh_CN/files/2457362/IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.pdf)
-<!--(https://github.com/SnowOnion/Proof-Theory-Notes-zh_CN/releases/download/IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition/IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.pdf)-->
++ 第一次课：预备知识，逻辑和证明系统，极小、直觉主义、古典的命题逻辑的公理系统、可靠性和完全性 [src](week-01.tex) [几乎最终版]
+
++ 番外一：证明直觉主义命题逻辑不能导出Peirce律和排中律-精简版 [src](IPC-can-not-derive-Peirce-law-and-law-of-excluded-middle-pro-edition.tex) [几乎最终版]
 
 ## 已完成
 
