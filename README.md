@@ -12,7 +12,7 @@ These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Jun
 
 ## 进行中
 
-此处给出到 .tex 源文件或源文件目录的链接；pdf 见 [releases](releases).
+此处给出到 .tex 源文件或源文件目录的链接；pdf 见 [releases](/../../releases).
 
 + 第一次课：预备知识，逻辑和证明系统，极小、直觉主义、古典的命题逻辑的公理系统、可靠性和完全性 [src](week-01.tex) [几乎最终版]
 
