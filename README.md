@@ -1,18 +1,15 @@
 # Proof-Theory-Notes-zh_CN
----
 这是我上[清华大学俞珺华老师](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html)讲授的证明论课程（2017年春季）时整理的笔记，主要以中文书写。以中文作为元语言（认真脸）。
 
  \-
 
 These are my notes for Proof Theory course (2017 Spring), instructed by [Dr. Junhua Yu, THU](http://www.phil.tsinghua.edu.cn/publish/dphi/3019/2015/20150116210527347156823/20150116210527347156823_.html), mainly written in Chinese (as metalanguage lol). 
 
- =
-
 # Contents
 
 ## 进行中
 
-此处给出到 .tex 源文件或源文件目录的链接；pdf 见 [releases](/../../releases).
+此处给出到 .tex 源文件或源文件目录的链接；pdf 见[我网站](https://sonion.xyz/logic/proof-theory/yu/2017/)或[releases（不推荐）](/../../releases).
 
 + 第一次课：预备知识，逻辑和证明系统，极小、直觉主义、古典的命题逻辑的公理系统、可靠性和完全性 [src](week-01.tex) [几乎最终版]
 
