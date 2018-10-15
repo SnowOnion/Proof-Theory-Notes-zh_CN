@@ -23,7 +23,7 @@
 # *.eps
 # *.pdf
 ## Lee Patch
-release-local/*.pdf
+release-local/*
 
 #### 啥？？？
 ## Generated if empty string is given at "Please type another file name for output:"
