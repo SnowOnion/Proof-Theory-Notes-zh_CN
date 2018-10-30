@@ -1,0 +1,227 @@
+%!TEX program = xelatex
+% 注意在 Overleaf 要手动把 project 的 compiler 改成 XeLaTeX
+\documentclass{article}
+\usepackage[top=0.5in, bottom=1in, left=1.25in, right=1.25in]{geometry} % 页边距
+\usepackage{xeCJK} % xeCJK 中文最小模板 via http://seisman.info/mini-template-for-xeCJK.html
+\usepackage{amsfonts} % \mathbb
+\usepackage{amsmath} % \DeclareMathOperator
+\usepackage{ebproof}   % Sequent calculi, easier % Thank you, Yinqiu Zhu!
+\usepackage{tabularx} % 临时分栏 http://bbs.ctex.org/forum.php?mod=viewthread&tid=78284
+\usepackage{array} % 表格 https://zhuanlan.zhihu.com/p/19749566
+\usepackage{datetime2} % 不仅要日期还要时间 https://tex.stackexchange.com/questions/2760/omitting-the-date-when-using-maketitle
+\usepackage{enumitem} % 定制列表 https://www.latex-tutorial.com/tutorials/lists/
+
+% 2018-09-23 LGC
+%\usepackage{mathabx} % \Dashv not beautiful! No double direction!
+\usepackage{turnstile} % well… 支持\not（？）, 不错啊
+% http://mirrors.huaweicloud.com/repository/toolkit/CTAN/macros/latex/contrib/turnstile/turnstile-en/turnstile_article.pdf
+% https://ctan.org/pkg/turnstile
+\def\seq{\sdststile{}{}} % “semantically equivalent”
+\def\nseq{\not\sdststile{}{}}
+
+\usepackage{amsthm} % \begin{proof} 证明过程 \end{proof}
+\usepackage{mathrsfs}% \mathscr
+\usepackage{graphicx} 
+%\includegraphics[scale=0.6]{fullscreen.png}
+% eg: width=3cm[缩放因子], height=8 cm[缩放因子] scale=0.4[缩放因子]
+% 浮动体
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[width=13.5cm]{2(b).JPG}
+%	\caption{Expected Truth Tables of $I_0,\cdots,I_4$ }
+%	\label{fig:proving-imply-cannot-derive-and}
+%\end{figure}
+
+
+% 从 PT 2017 hw5 copy 改造（该模块化了！）
+
+\def\To{\Rightarrow}
+
+\def\a{\alpha}
+\def\b{\beta}
+\def\c{\gamma}
+\def\d{\delta}
+\def\C{\Gamma}
+\def\D{\Delta}
+
+
+\def\S{\Sigma}
+\def\P{\Pi}
+
+\def\e{\eta}
+\def\t{\theta}
+\def\T{\Theta}
+
+\def\AX{(AX)}
+\def\LB{(L$\bot$)}
+\def\LA{(L$\land$)}
+\def\LAL{(L$\land_L$)}
+\def\LAR{(L$\land_R$)}
+\def\RA{(R$\land$)}
+\def\LV{(L$\lor$)}
+\def\RV{(R$\lor$)}
+\def\RVL{(R$\lor_L$)}
+\def\RVR{(R$\lor_R$)}
+
+\def\RI{(R$\to$)}
+\def\LI{(L$\to$)}
+
+\def\LW{(LW)}
+\def\RW{(RW)}
+\def\LC{(LC)}
+\def\RC{(RC)}
+
+% RC = R Conjunction = R Contraction hmmmmm
+% So, RA, RV 2333333
+% \def 重定义宏, 没有error没有warning…… 后一个默默覆盖。\newcommand 则会检查, 不能覆盖已有的命令。\renewcommand 则又能覆盖……
+% 怎么快速找到哪个命令在哪个宏包被定义的呢？
+
+% 蛤！TeXstudio 的编辑器 也 可以定义宏（快捷键层面）…… shift+F1出个证明环境233
+
+\def\EQ{($\equiv$)}
+
+\def\Gonecp{$ \mathsf{G1cp} $ }
+\def\Gthreecp{$ \mathsf{G3cp}$ }
+\def\Gthreeip{$ \mathsf{G3ip}$ }
+\def\Gthreei{$ \mathsf{G3i}$ }
+\def\Gonec{$ \mathsf{G1c} $ }
+\def\Gonesfour{$ \mathsf{G1S4} $ } % TODO 为啥最后得加空格？
+
+\def\Goneip{$ \mathsf{G1ip} $ }
+\def\Gonei{$ \mathsf{G1i} $ }
+
+\def\Gtwocps{$ \mathsf{G2cp^*} $  }
+\def\Gtwomips{$ \mathsf{G2[mi]p^*} $  }
+\def\Gtwoips{$ \mathsf{G2ip^*} $  }
+
+
+
+\def\LVM{(L$\lor^\otimes$)}
+
+\usepackage{amssymb}
+
+\def\Dia{\Diamond} % diamond is small, Diamond is thin
+
+\def\KBox{(K$\Box$)}
+\def\RBox{(R$\Box$)}
+\def\FBox{(4$\Box$)}
+\def\LBox{(L$\Box$)} % LB = L Bottom... 
+
+\def\LDia{(L$\Dia$)}
+
+\def\LN{(L$\neg$)}
+\def\RN{(R$\neg$)}
+\def\LNN{(L$\neg\neg$)}
+\def\RNN{(R$\neg\neg$)}
+
+\def\LAll{(L$ \forall $)}
+\def\LExi{(L$ \exists $)}
+\def\RAll{(R$ \forall $)}
+\def\RExi{(R$ \exists $)}
+
+%\Gonecp
+%
+%\AX \LB \LAL \LAR \RA \LV \RVL \RVR \RI \LI
+%
+%\LW \RW \LC \RC
+%
+%\EQ
+
+
+
+
+% 只有本文才用的:
+\def\theH{H_{cp\to}}
+\def\theG{G1_{cp\to}}
+
+
+\title{问道于群}
+\author{SOnion snowonionlee@gmail.com}
+\date{\DTMnow}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{下述命题逻辑的某片段的两个演算等价吗?}
+	
+	\subsection{语言}
+	$$\varphi ::= p ~|~ (\varphi \to \varphi)$$
+	
+	并按习俗省略括号……
+	
+	约定:本文中的 $\C$、$\D$ 是多重集, 不是集合或序列. Sequent 用 $\To$ 作为 antecedent 和 succedent 的分隔符. $\vdash$ 只用于在元语言里表示可证性.
+	
+	\subsection{一个公理系统, 暂且称为 $\theH$}
+	.
+	
+	规则:\\
+	
+	\begin{prooftree} 
+		\Hypo{\C \vdash \a}
+		\Hypo{\D \vdash \a \to \b}
+		\Infer2[(MP)]{\C \cup \D \vdash \b} 
+	\end{prooftree}	\\
+	
+	公理: 
+	
+	\begin{itemize}
+		\item AX1: $\vdash \a \to (\b \to \a)$
+		\item AX2: $\vdash (\a \to (\b \to \c)) \to ((\a \to \b) \to (\a \to \c))$
+	\end{itemize}
+	
+	\subsection{一个矢列演算, 暂且称为 $\theG$}
+	.
+	
+	(从名字可以看出, 是从 \Gonecp 里掐出来的. 我确实是这样干的.)
+	
+	公理: 无.
+	
+	规则: 一个公理规则, 两个逻辑规则, 四个结构规则.\\
+	
+	\begin{prooftree} 
+		\Hypo{}
+		\Infer1[(AX)]{\a \to \a} 
+	\end{prooftree} \\
+	
+	\begin{prooftree} 
+		\Hypo{\a,\C \To \D, \b}
+		\Infer1[(R$\to$)]{\C \To \D, \a\to\b} 
+	\end{prooftree}
+\quad
+	\begin{prooftree} 
+	\Hypo{\b,\C \To \D}
+	\Hypo{\C \To \D,\a}
+	\Infer2[(L$\to$)]{\a\to\b, \C \To \D } 
+	\end{prooftree} \\
+
+	\begin{prooftree} 
+	\Hypo{\C \To \D}
+	\Infer1[(LW)]{\a,\C \To \D} 
+	\end{prooftree}
+\quad
+	\begin{prooftree} 
+	\Hypo{\C \To \D}
+	\Infer1[(RW)]{\C \To \D,\b} 
+	\end{prooftree}
+\quad
+	\begin{prooftree} 
+	\Hypo{\a,\a,\C \To \D}
+	\Infer1[(LC)]{\a,\C \To \D} 
+	\end{prooftree}
+\quad
+	\begin{prooftree} 
+	\Hypo{\C \To \D,\b,\b}
+	\Infer1[(RC)]{\C \To \D,\b} 
+	\end{prooftree} \\
+
+	
+	\subsection{我的疑问}
+	\begin{enumerate}
+		\item $\theH$ 和 $\theG$ 等价吗? 这里把等价定义为, 对任意公式$\varphi$和公式多重集$\S$有$\S \vdash_{\theH} \varphi$当且仅当$\vdash_{\theG} \S \To \varphi$. 由于这题是我瞎出的, 且我在试图证右边推左边时, 卡在 (L$\to$) 等几个规则过不去, 所以怀疑根本不正确.
+		\item $\theH$ 或 $\theG$ 可以叫作 ``古典命题逻辑的蕴含词片段'' 吗?
+	\end{enumerate}
+	
+	
+\end{document}
